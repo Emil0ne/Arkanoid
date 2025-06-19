@@ -183,9 +183,7 @@ def show_congratulations_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, sele
 # Ekran game over
 def show_game_over_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     options = [
-        ('Restart', 'restart'),
         ('Menu główne', 'main_menu'),
-        ('Wyjście', 'quit')
     ]
     selected = 0
 

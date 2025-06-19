@@ -25,6 +25,13 @@ def show_start_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
 
     font = get_font(48, bold=True)
 
+    theme_path = os.path.join('sounds', 'theme-song.mp3')
+    try:
+        pygame.mixer.music.load(theme_path)
+        pygame.mixer.music.play(-1)
+    except pygame.error:
+        pass
+
     fade_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
     fade_surface.fill(DARK_BLUE)
     fade_alpha = 255
@@ -72,6 +79,7 @@ def show_start_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
                     elif value == "show_instructions":
                         show_instructions(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
                     else:
+                        pygame.mixer.music.stop()
                         return value
 
 #Ekran wyboru trudnośći

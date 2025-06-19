@@ -143,6 +143,8 @@ while True:
                                 sound_2.play()
                             elif hasattr(brick, 'hits_remaining') and brick.hits_remaining == 2:
                                 sound_3.play()
+                            else:
+                                ball.bounce_sound.play()
                             brick.hit()
                             if not brick.alive:
                                 bricks.remove(brick)

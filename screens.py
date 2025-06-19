@@ -422,8 +422,6 @@ def ask_player_name(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
 def show_game_complete_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     options = [
         ('Menu główne', 'main_menu'),
-        ('Pokaż wyniki', 'show_highscores'),
-        ('Wyjście', 'quit')
     ]
     selected = 0
 

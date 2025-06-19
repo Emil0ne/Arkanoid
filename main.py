@@ -28,6 +28,8 @@ ball_sound = pygame.mixer.Sound('sounds/ball.mp3')
 lose_life_sound = pygame.mixer.Sound('sounds/lose-life.mp3')
 sound_2 = pygame.mixer.Sound('sounds/2-sound.mp3')
 sound_3 = pygame.mixer.Sound('sounds/3-sound.mp3')
+powerup_sound = pygame.mixer.Sound('sounds/powerup.mp3')
+laser_sound = pygame.mixer.Sound('sounds/laser.mp3')
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 700
@@ -99,6 +101,8 @@ while True:
                             laser2 = Laser(paddle.rect.right - 10, paddle.rect.top)
                             lasers.append(laser1)
                             lasers.append(laser2)
+                            laser_sound.play()
+
                         elif not ball_active:
                             ball_active = True
                     if event.key == pygame.K_p:
@@ -248,6 +252,7 @@ while True:
                         lives, laser_enabled, laser_timer = result
                     else:
                         lives = result
+                    powerup_sound.play()
                     powerups.remove(powerup)
                 elif powerup.rect.top > SCREEN_HEIGHT:
                     powerups.remove(powerup)

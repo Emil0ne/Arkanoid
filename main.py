@@ -11,7 +11,7 @@ from ball import Ball
 from brick import Brick
 from powerup import PowerUp, apply_effect
 from levels import LEVELS, load_level
-from screens import show_start_screen, show_difficulty_selection_screen, show_game_over_screen, show_congratulations_screen, ask_player_name, show_highscores
+from screens import show_start_screen, show_difficulty_selection_screen, show_game_over_screen, show_congratulations_screen, ask_player_name, show_highscores, show_game_complete_screen
 from helpers import apply_difficulty_settings, get_randomized_ball_speed, save_score
 from particle import Particle
 from laser import Laser
@@ -297,22 +297,71 @@ while True:
 
     if level_cleared:
         result = show_congratulations_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
-        if result == 'next_level' and current_level_index + 1 < len(level_keys):
-            current_level_index += 1
-            brick_width = SCREEN_WIDTH // len(LEVELS[level_keys[current_level_index]][0])
-            brick_height = 30
-            bricks = load_level(level_keys[current_level_index], brick_width, brick_height, LEVELS)
-            start_speed_x, start_speed_y = get_randomized_ball_speed(initial_ball_speed_x, initial_ball_speed_y)
-            angle = math.atan2(start_speed_y, start_speed_x)
-            speed = math.hypot(start_speed_x, start_speed_y)
-            balls = [Ball(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 10, math.cos(angle) * speed, math.sin(angle) * speed, SCREEN_WIDTH, SCREEN_HEIGHT, ball_sound)]
-            ball_active = False
-            paddle.rect.width = base_paddle_width
-            paddle.rect.centerx = SCREEN_WIDTH // 2
-            powerups.clear()
-            lasers.clear()
-            laser_enabled = False
-            pygame.time.set_timer(WIDEN_SHRINK_RESET, 0)
-            pygame.time.set_timer(SPEED_RESET, 0)
+        if result == 'next_level':
+            if current_level_index + 1 < len(level_keys):
+                current_level_index += 1
+                brick_width = SCREEN_WIDTH // len(LEVELS[level_keys[current_level_index]][0])
+                brick_height = 30
+                bricks = load_level(level_keys[current_level_index], brick_width, brick_height, LEVELS)
+                start_speed_x, start_speed_y = get_randomized_ball_speed(initial_ball_speed_x, initial_ball_speed_y)
+                angle = math.atan2(start_speed_y, start_speed_x)
+                speed = math.hypot(start_speed_x, start_speed_y)
+                balls = [Ball(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 10,
+                            math.cos(angle) * speed, math.sin(angle) * speed,
+                            SCREEN_WIDTH, SCREEN_HEIGHT, ball_sound)]
+                ball_active = False
+                paddle.rect.width = base_paddle_width
+                paddle.rect.centerx = SCREEN_WIDTH // 2
+                powerups.clear()
+                lasers.clear()
+                laser_enabled = False
+                pygame.time.set_timer(WIDEN_SHRINK_RESET, 0)
+                pygame.time.set_timer(SPEED_RESET, 0)
+            else:
+                if not score_saved:
+                    save_score(player_name, score, difficulty)
+                    score_saved = True
+                while True:
+                    final_choice = show_game_complete_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
+                    if final_choice == 'show_highscores':
+                        show_highscores(screen, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, select_sound)
+                    elif final_choice == 'main_menu':
+                        os.execv(sys.executable, [sys.executable] + sys.argv)
+                    elif final_choice == 'quit':
+                        pygame.quit()
+                        sys.exit()
+                    else:
+                        break
         else:
+            if not score_saved:
+                save_score(player_name, score, difficulty)
+                score_saved = True
             result = show_game_over_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
+            if result == 'restart':
+                score = 0
+                lives = 5
+                score_saved = False
+                current_level_index = 0
+                brick_width = SCREEN_WIDTH // len(LEVELS[level_keys[current_level_index]][0])
+                brick_height = 30
+                bricks = load_level(level_keys[current_level_index], brick_width, brick_height, LEVELS)
+                start_speed_x, start_speed_y = get_randomized_ball_speed(initial_ball_speed_x, initial_ball_speed_y)
+                angle = math.atan2(start_speed_y, start_speed_x)
+                speed = math.hypot(start_speed_x, start_speed_y)
+                balls = [Ball(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 10,
+                            math.cos(angle) * speed, math.sin(angle) * speed,
+                            SCREEN_WIDTH, SCREEN_HEIGHT, ball_sound)]
+                ball_active = False
+                paddle.rect.width = base_paddle_width
+                paddle.rect.centerx = SCREEN_WIDTH // 2
+                powerups.clear()
+                lasers.clear()
+                laser_enabled = False
+                pygame.time.set_timer(WIDEN_SHRINK_RESET, 0)
+                pygame.time.set_timer(SPEED_RESET, 0)
+                continue
+            elif result == 'main_menu':
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+            elif result == 'quit':
+                pygame.quit()
+                sys.exit()

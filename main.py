@@ -300,6 +300,12 @@ while True:
                     laser_enabled = False
                     pygame.time.set_timer(WIDEN_SHRINK_RESET, 0)
                     pygame.time.set_timer(SPEED_RESET, 0)
+                elif result == 'quit':
+                    if not score_saved:
+                        save_score(player_name, score, difficulty)
+                        score_saved = True
+                    restart_to_menu = True
+                    break
             else:
                 if not score_saved:
                     save_score(player_name, score, difficulty)

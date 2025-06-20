@@ -7,13 +7,13 @@ def apply_difficulty_settings(difficulty, paddle):
         paddle.rect.width = 160
         powerup_chance = 0.3
     elif difficulty in ['normal', 'normalny']:
-        initial_ball_speed_x = 7
-        initial_ball_speed_y = -7
+        initial_ball_speed_x = 6
+        initial_ball_speed_y = -6
         paddle.rect.width = 140
         powerup_chance = 0.2
     elif difficulty in ['hard', 'trudny']:
-        initial_ball_speed_x = 9
-        initial_ball_speed_y = -9
+        initial_ball_speed_x = 8
+        initial_ball_speed_y = -8
         paddle.rect.width = 120
         powerup_chance = 0.1
 

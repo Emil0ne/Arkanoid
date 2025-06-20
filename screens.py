@@ -20,7 +20,7 @@ def get_font(size, bold=False):
 
 # Ekran startowy
 def show_start_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
-    options = [('Graj', 'play'), ('Wyniki', 'show_highscores'), ('Instrukcje', 'show_instructions')]
+    options = [('Graj', 'play'), ('Wyniki', 'show_highscores'), ('Instrukcje', 'show_instructions'), ('Wyjście', 'quit')]
     selected = 0
 
     font = get_font(48, bold=True)
@@ -78,6 +78,9 @@ def show_start_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
                         show_highscores(screen, SCREEN_WIDTH, SCREEN_HEIGHT, 'normal', select_sound)
                     elif value == "show_instructions":
                         show_instructions(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
+                    elif value == "quit":
+                        pygame.quit()
+                        sys.exit()
                     else:
                         pygame.mixer.music.stop()
                         return value

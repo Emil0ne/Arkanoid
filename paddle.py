@@ -11,7 +11,6 @@ class Paddle:
             self.rect.x -= self.speed
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.speed
-        #Uniemożliwienie wyjścia paletki poza ekran
         if self.rect.left < 0:
             self.rect.left = 0
         if self.rect.right > self.screen_width:

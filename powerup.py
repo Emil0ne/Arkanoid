@@ -12,7 +12,7 @@ class PowerUp:
         'fast': (0, 0, 255),      # niebieski
         'multi': (0, 255, 0),     # zielony
         'extra': (255, 0, 0),     # czerwony
-        'laser': (255, 0, 255)    # fioletowy - DODANY laser
+        'laser': (255, 0, 255)    # fioletowy
     }
 
     def __init__(self, x, y, kind):

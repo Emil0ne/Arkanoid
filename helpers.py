@@ -29,7 +29,6 @@ def save_score(player_name, score, difficulty):
     filename = f'scores_{difficulty}.txt'
     scores = []
 
-    # Wczytaj istniejące wyniki
     if os.path.exists(filename):
         with open(filename, 'r', encoding='utf-8') as f:
             for line in f:
@@ -43,19 +42,16 @@ def save_score(player_name, score, difficulty):
                         except ValueError:
                             pass
 
-    # Dodaj nowy wynik
     scores.append((player_name, score))
 
-    # Posortuj malejąco
     scores.sort(key=lambda x: x[1], reverse=True)
 
-    # Zapisz tylko TOP 10
     with open(filename, 'w', encoding='utf-8') as f:
         for name, s in scores[:10]:
             f.write(f'{name}: {s}\n')
 
 def show_level_transition(screen, SCREEN_WIDTH, SCREEN_HEIGHT, background_image, level_number):
-    import pygame  # lokalny import żeby helpers nie wymagał pygame przy importowaniu helpers
+    import pygame
 
     font_big = pygame.font.SysFont(None, 100)
     level_text = font_big.render(f"LEVEL {level_number}", True, (255, 255, 255))
@@ -63,22 +59,19 @@ def show_level_transition(screen, SCREEN_WIDTH, SCREEN_HEIGHT, background_image,
     overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
     overlay.fill((0, 0, 0))
 
-    # FADE IN
     for alpha in range(0, 256, 15):
         overlay.set_alpha(alpha)
-        screen.blit(background_image, (0, 0))  # możesz dać czarne tło
+        screen.blit(background_image, (0, 0))
         screen.blit(level_text, (SCREEN_WIDTH // 2 - level_text.get_width() // 2, SCREEN_HEIGHT // 2 - level_text.get_height() // 2))
         screen.blit(overlay, (0, 0))
         pygame.display.flip()
         pygame.time.delay(30)
 
-    # krótkie zatrzymanie (pełny czarny + napis)
     pygame.time.delay(1000)
 
-    # FADE OUT
     for alpha in range(255, -1, -15):
         overlay.set_alpha(alpha)
-        screen.blit(background_image, (0, 0))  # albo czarne tło
+        screen.blit(background_image, (0, 0))
         screen.blit(level_text, (SCREEN_WIDTH // 2 - level_text.get_width() // 2, SCREEN_HEIGHT // 2 - level_text.get_height() // 2))
         screen.blit(overlay, (0, 0))
         pygame.display.flip()
@@ -88,7 +81,7 @@ def reset_game_state(level_keys, difficulty, paddle, SCREEN_WIDTH, SCREEN_HEIGHT
     import pygame
     import math
     from levels import load_level
-    from helpers import apply_difficulty_settings, get_randomized_ball_speed
+    from helpers import apply_difficulty_settings
     from ball import Ball
 
     current_level_index = 0
@@ -116,10 +109,9 @@ def reset_game_state(level_keys, difficulty, paddle, SCREEN_WIDTH, SCREEN_HEIGHT
 
     paddle.rect.width = base_paddle_width
     paddle.rect.centerx = SCREEN_WIDTH // 2
-    pygame.time.set_timer(pygame.USEREVENT + 1, 0)  # WIDEN_SHRINK_RESET
-    pygame.time.set_timer(pygame.USEREVENT + 2, 0)  # SPEED_RESET
+    pygame.time.set_timer(pygame.USEREVENT + 1, 0) 
+    pygame.time.set_timer(pygame.USEREVENT + 2, 0) 
 
-    # zwracamy wszystkie zmienne które były globalne:
     return (current_level_index, brick_width, brick_height, bricks,
             initial_ball_speed_x, initial_ball_speed_y, base_paddle_width, powerup_chance,
             angle, speed, balls, ball_active, score, lives, powerups,

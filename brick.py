@@ -16,7 +16,6 @@ class Brick:
         if self.alive:
             draw_color = self.color
 
-            # obsługa błysku dla silverów
             if self.indestructible:
                 current_time = time.time()
                 if current_time - self.last_blink > 2:
@@ -27,10 +26,8 @@ class Brick:
                     if current_time - self.last_blink > 0.2:
                         self.is_blinking = False
 
-            # główny prostokąt
             pygame.draw.rect(screen, draw_color, self.rect)
 
-            # gradient: jaśniejsza góra
             highlight = (
                 min(draw_color[0] + 50, 255),
                 min(draw_color[1] + 50, 255),
@@ -42,7 +39,6 @@ class Brick:
                 (self.rect.x, self.rect.y, self.rect.width, self.rect.height // 3),
             )
 
-            # gradient: ciemniejszy dół
             shadow = (
                 max(draw_color[0] - 50, 0),
                 max(draw_color[1] - 50, 0),
@@ -59,12 +55,9 @@ class Brick:
                 ),
             )
 
-            # obramowanie
             pygame.draw.rect(screen, (0, 0, 0), self.rect, 2)
 
-            # efekt popękania
             if self.cracked:
-                # przykładowe pęknięcie — 2 linie
                 pygame.draw.line(screen, (255, 255, 255), (self.rect.left + 5, self.rect.top + 5),
                                  (self.rect.right - 5, self.rect.bottom - 5), 2)
                 pygame.draw.line(screen, (255, 255, 255), (self.rect.right - 5, self.rect.top + 5),
@@ -74,6 +67,6 @@ class Brick:
         if not self.indestructible:
             self.hits_remaining -= 1
             if self.hits_remaining == 1:
-                self.cracked = True  # po pierwszym uderzeniu
+                self.cracked = True
             if self.hits_remaining <= 0:
                 self.alive = False

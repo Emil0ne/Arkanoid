@@ -2,7 +2,6 @@ import pygame
 import sys
 import os
 
-# Kolory
 DARK_BLUE = (10, 10, 50)
 WHITE = (255, 255, 255)
 YELLOW = (255, 215, 0)
@@ -10,7 +9,6 @@ RED = (255, 50, 50)
 GREEN = (50, 255, 50)
 BLUE = (50, 150, 255)
 
-# Czcionka
 def get_font(size, bold=False):
     if bold:
         font_path = os.path.join("fonts", "Lato-Bold.ttf")
@@ -18,7 +16,6 @@ def get_font(size, bold=False):
         font_path = os.path.join("fonts", "Lato-Regular.ttf")
     return pygame.font.Font(font_path, size)
 
-# Ekran startowy
 def show_start_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     options = [('Graj', 'play'), ('Wyniki', 'show_highscores'), ('Instrukcje', 'show_instructions'), ('Wyjście', 'quit')]
     selected = 0
@@ -85,10 +82,9 @@ def show_start_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
                         pygame.mixer.music.stop()
                         return value
 
-#Ekran wyboru trudnośći
 def show_difficulty_selection_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     difficulties = [('Łatwy', 'easy'), ('Normalny', 'normal'), ('Trudny', 'hard')]
-    selected = 1  # domyślnie normal
+    selected = 1 
 
     font_title = get_font(48, bold=True)
     font = get_font(36)
@@ -134,8 +130,6 @@ def show_difficulty_selection_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select
                     select_sound.play()
                     return None
 
-
-# Ekran gratulacji
 def show_congratulations_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     options = [('Następny poziom', 'next_level'), ('Wyjście', 'quit')]
     selected = 0
@@ -191,7 +185,6 @@ def show_congratulations_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, sele
 
     return result
 
-# Ekran game over
 def show_game_over_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     options = [
         ('Menu główne', 'main_menu'),
@@ -249,7 +242,6 @@ def show_game_over_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sou
 
     return result
 
-# Ekran wyników
 def show_highscores(screen, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, select_sound):
     font_title = get_font(50, bold=True)
     font = get_font(36)
@@ -308,7 +300,6 @@ def show_highscores(screen, SCREEN_WIDTH, SCREEN_HEIGHT, difficulty, select_soun
                     selected_difficulty_index = (selected_difficulty_index - 1) % len(difficulties)
                     select_sound.play()
 
-# Ekran instrukcji
 def show_instructions(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
     font_title = get_font(50, bold=True)
     font = get_font(28)
@@ -374,8 +365,7 @@ def show_instructions(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
                 elif event.key == pygame.K_UP:
                     scroll_offset = max(scroll_offset - 20, 0)
 
-# Ekran wpisywania imienia
-def ask_player_name(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
+def ask_player_name(screen, SCREEN_WIDTH, select_sound):
     font = get_font(48, bold=True)
     font_small = get_font(32)
 
@@ -399,7 +389,6 @@ def ask_player_name(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
         prompt = font_small.render("ENTER - potwierdź, BACKSPACE - usuń, ESC - wyjdź", True, WHITE)
         screen.blit(prompt, (SCREEN_WIDTH // 2 - prompt.get_width() // 2, 400))
 
-        # Wyświetl komunikat błędu jeśli jest
         if error_message and pygame.time.get_ticks() - error_timer < 2000:
             error_font = font_small
             error_text = error_font.render(error_message, True, RED)
@@ -486,4 +475,3 @@ def show_game_complete_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select
                         waiting = False
 
     return result
-

@@ -140,15 +140,14 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
     layer_colors = {}
     tile_color_map = {}
 
-    # Ustawienia kolorów zależnie od poziomu
-    if level_key in ['level1', 'level5']:  # kolumny
+    if level_key in ['level1', 'level5']:
         for _ in range(len(level_data)):
             row_colors.append(predefined_colors[0])
-    elif level_key == 'level2':  # rzędy, każdy inny kolor
+    elif level_key == 'level2':
         available_colors = predefined_colors.copy()
         random.shuffle(available_colors)
         row_colors = available_colors[:len(level_data)]
-    elif level_key == 'level4':  # skośne przekątne
+    elif level_key == 'level4':
         available_colors = predefined_colors.copy()
         random.shuffle(available_colors)
         color_index = 0
@@ -160,10 +159,9 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
         for diag in sorted(diag_set):
             diagonal_colors[diag] = available_colors[color_index % len(available_colors)]
             color_index += 1
-    elif level_key == 'level6':  # łuki liczone względem dolnego klocka w kolumnie
+    elif level_key == 'level6':
         center_col = len(level_data[0]) // 2
 
-        # Obliczamy lowest_row[col_index]
         lowest_row = {}
         for col_index in range(len(level_data[0])):
             lowest_row[col_index] = None
@@ -172,7 +170,6 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
                     lowest_row[col_index] = row_index
                     break
 
-        # Zbieramy layer_set
         layer_set = set()
         for row_index, row in enumerate(level_data):
             for col_index, cell in enumerate(row):
@@ -180,28 +177,23 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
                     layer = row_index - lowest_row[col_index]
                     layer_set.add(layer)
 
-        # Przypisujemy kolory do layerów
         available_colors = predefined_colors.copy()
         random.shuffle(available_colors)
         for layer in sorted(layer_set):
             layer_colors[layer] = available_colors.pop()
 
-    elif level_key == 'level7':  # SZTYWNE przypisanie (row, col) → kolor
+    elif level_key == 'level7': 
         tile_color_map = {
-            # pełne rzędy u góry
             **{(0, c): (255, 0, 0) for c in range(13)},
             **{(1, c): (0, 255, 0) for c in range(13)},
             **{(2, c): (0, 0, 255) for c in range(13)},
             
-            # lewa wyspa wiersz 4-5 → zielona
             **{(4, c): (0, 255, 0) for c in range(1, 5)},
             **{(5, c): (0, 255, 0) for c in range(1, 5)},
             
-            # prawa wyspa wiersz 4-5 → czerwona
             **{(4, c): (255, 0, 0) for c in range(8, 12)},
             **{(5, c): (255, 0, 0) for c in range(8, 12)},
             
-            # dolna wyspa wiersz 8-9 → niebieska
             **{(8, c): (0, 0, 255) for c in range(5, 8)},
             **{(9, c): (0, 0, 255) for c in range(5, 8)},
         }
@@ -210,7 +202,6 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
         for _ in level_data:
             row_colors.append(random.choice(predefined_colors))
 
-    # Tworzenie cegiełek
     for row_index, row in enumerate(level_data):
         for col_index, cell in enumerate(row):
             x = col_index * brick_width
@@ -231,9 +222,9 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
                         layer = row_index - lowest_row[col_index]
                         color = layer_colors[layer]
                     else:
-                        color = (255, 255, 255)  # fallback
+                        color = (255, 255, 255)
                 elif level_key == 'level7':
-                    color = tile_color_map.get((row_index, col_index), (255, 255, 255))  # default white
+                    color = tile_color_map.get((row_index, col_index), (255, 255, 255))
                 else:
                     color = row_colors[row_index]
                 bricks.append(Brick(x, y, brick_width, brick_height, color))
@@ -243,7 +234,7 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
                 bricks.append(Brick(x, y, brick_width, brick_height, silver_color, indestructible=True))
 
             elif cell == 3:
-                color = (60, 60, 60)  # ciemny szary
+                color = (60, 60, 60) 
                 bricks.append(Brick(x, y, brick_width, brick_height, color, hits_remaining=2))
 
     return bricks

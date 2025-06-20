@@ -27,7 +27,6 @@ class Ball:
         dx = math.cos(self.angle) * self.speed
         dy = math.sin(self.angle) * self.speed
 
-        # Ruch w osi X
         self.x += dx
         self.rect.centerx = int(self.x)
         if collidables:
@@ -39,7 +38,6 @@ class Ball:
                     self.bounce_horizontal(play_sound=play_bounce_sound)
                     break
 
-        # Ruch w osi Y
         self.y += dy
         self.rect.centery = int(self.y)
         if collidables:
@@ -51,7 +49,6 @@ class Ball:
                     self.bounce_vertical(play_sound=play_bounce_sound)
                     break
 
-        # Ściany
         bounced = False
         if self.rect.left <= 0:
             self.rect.left = 0

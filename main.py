@@ -279,6 +279,7 @@ while True:
                 break
 
         if level_cleared:
+            score += lives * 10
             if current_level_index + 1 < len(level_keys):
                 result = show_congratulations_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
                 if result == 'next_level':

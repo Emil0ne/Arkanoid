@@ -105,6 +105,9 @@ while True:
 
                         elif not ball_active:
                             ball_active = True
+                            for ball in balls:
+                                random_offset = random.uniform(-1, 1)
+                                ball.set_angle_from_offset(random_offset)
                     if event.key == pygame.K_p:
                         paused = not paused
                 if event.type == WIDEN_SHRINK_RESET:

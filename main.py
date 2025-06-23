@@ -60,7 +60,7 @@ while True:
         else:
             continue
 
-        player_name = ask_player_name(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound)
+        player_name = ask_player_name(screen, SCREEN_WIDTH, select_sound)
         if player_name is None:
             continue
         break

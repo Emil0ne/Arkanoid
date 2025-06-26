@@ -1,14 +1,9 @@
-import pygame
-import sys
-import os
-import random
-import math
+import pygame, sys, os, random, math
 
 os.chdir(os.path.dirname(__file__))
 
 from paddle import Paddle
 from ball import Ball
-from brick import Brick
 from powerup import PowerUp, apply_effect
 from levels import LEVELS, load_level
 from screens import show_start_screen, show_difficulty_selection_screen, show_game_over_screen, show_congratulations_screen, ask_player_name, show_highscores, show_game_complete_screen

@@ -112,7 +112,6 @@ def load_level(level_key, brick_width, brick_height, LEVELS):
     level_data = LEVELS[level_key]
 
     predefined_colors = [
-        (255, 255, 255),  # white
         (255, 165, 0),    # orange
         (255, 255, 0),    # yellow
         (0, 255, 0),      # green

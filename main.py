@@ -305,6 +305,12 @@ while True:
                         score_saved = True
                     restart_to_menu = True
                     break
+                elif result == 'quit_game':
+                    if not score_saved:
+                        save_score(player_name, score, difficulty)
+                        score_saved = True
+                    restart_to_menu = True
+                    break
             else:
                 if not score_saved:
                     save_score(player_name, score, difficulty)

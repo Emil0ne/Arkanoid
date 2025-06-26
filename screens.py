@@ -131,7 +131,11 @@ def show_difficulty_selection_screen(screen, SCREEN_WIDTH, SCREEN_HEIGHT, select
                     return None
 
 def show_congratulations_screen(score, screen, SCREEN_WIDTH, SCREEN_HEIGHT, select_sound):
-    options = [('Następny poziom', 'next_level'), ('Wyjście', 'quit')]
+    options = [
+        ('Następny poziom', 'next_level'),
+        ('Wyjście', 'quit'),
+        ('Zakończ grę', 'quit_game')
+    ]
     selected = 0
 
     font = get_font(48, bold=True)

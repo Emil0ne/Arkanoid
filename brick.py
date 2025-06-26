@@ -58,10 +58,8 @@ class Brick:
             pygame.draw.rect(screen, (0, 0, 0), self.rect, 2)
 
             if self.cracked:
-                pygame.draw.line(screen, (255, 255, 255), (self.rect.left + 5, self.rect.top + 5),
-                                 (self.rect.right - 5, self.rect.bottom - 5), 2)
-                pygame.draw.line(screen, (255, 255, 255), (self.rect.right - 5, self.rect.top + 5),
-                                 (self.rect.left + 5, self.rect.bottom - 5), 2)
+                pygame.draw.line(screen, (255, 255, 255), (self.rect.left + 5, self.rect.top + 5), (self.rect.right - 5, self.rect.bottom - 5), 2)
+                pygame.draw.line(screen, (255, 255, 255), (self.rect.right - 5, self.rect.top + 5), (self.rect.left + 5, self.rect.bottom - 5), 2)
 
     def hit(self):
         if not self.indestructible:
